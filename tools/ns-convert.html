@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>进制转换</title>
+        <script type="text/javascript" src="../static/js/jquery.min.js"></script>
+    </head>
+    <body>
+        
+        <div>
+            &#12288;二进制：<input type="text" class="input-box" id="binary" data-select-id="2"><br>
+            &#12288;八进制：<input type="text" class="input-box" id="octal" data-select-id="8"><br>
+            &#12288;十进制：<input type="text" class="input-box" id="decimal" data-select-id="10"><br>
+            十六进制：<input type="text" class="input-box" id="hexadecimal" data-select-id="16"><br>
+            <button id="convert">转换</button>
+
+            <script>
+                $(function(){
+                    var nowSelect = 0;
+                    $(".input-box").focus(function(){
+                        console.log($(this))
+                        nowSelect = $(this).attr("data-select-id");
+                        console.log(nowSelect)
+                    });
+                    $("#convert").click(function(){
+                        var regExp;
+                        var d;
+                        var mark;
+                        var s;
+                        switch (nowSelect) {
+                            case "2":
+                                regExp = /^[01]+$/;
+                                s = $("#binary");
+                                mark = 2;
+                                break;
+                            case "8":
+                                regExp = /^[0-7]+$/;
+                                s = $("#octal");
+                                mark = 8;
+                                break;
+                            case "10":
+                                regExp = /^[0-9]+$/;
+                                s = $("#decimal");
+                                mark = 10;
+                                break;
+                            case "16":
+                                regExp = /^[\da-fA-F]+$/;
+                                s = $("#hexadecimal");
+                                mark = 16;
+                                break;
+                            default:
+                                return;
+                        }
+                        var svalue = s.val();
+                        if(!regExp.test(svalue)){
+                            s.val("输入有误");
+                            return;
+                        }
+                        d = parseInt(svalue,mark);
+                        $("#binary").val(d.toString(2));
+                        $("#octal").val(d.toString(8));
+                        $("#decimal").val(d.toString(10));
+                        $("#hexadecimal").val(d.toString(16).toUpperCase());
+                    });
+                });
+            </script>
+        </div>
+    </body>
+</html>
